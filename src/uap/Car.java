@@ -104,7 +104,7 @@ public class Car {
 
 		String re = iModel.replaceAll("\\s+", "_");
 
-		String id = (a + "-" + x + "-" + re);
+		String id = (a.toUpperCase() + "-" + x + "-" + re.toUpperCase());
 		ID.add(id);
 		Brand.add(iBrand);
 		Model.add(iModel);
@@ -120,16 +120,16 @@ public class Car {
 		if (Brand.size() == 0) {
 			System.out.println("-No car in collection yet-");
 		}
+		System.out.println("List Of Cars \n");
+		System.out.println("=============================== \n \n");
 		for (int i = 0; i < ID.size(); i++) {
-			System.out.println("List Of Cars \n");
-			System.out.println("=============================== \n \n");
 			System.out.println("=============================== \n");
 			System.out.println("ID          		: " + ID.get(i));
 			System.out.println("Brand        		: " + Brand.get(i));
 			System.out.println("Classification      	: " + Classification.get(i));
 			System.out.println("Car Model      		: " + Model.get(i));
 			System.out.println("Status      		: " + Status.get(i));
-			System.out.println("Price (USD)      	: " + Price.get(i));
+			System.out.println("Price (USD)      	: $" + Price.get(i));
 			System.out.println("=============================== \n");
 		}
 	}
@@ -158,14 +158,20 @@ public class Car {
 	}
 
 	public void change() {
-		for (int i = 0; i < ID.size(); i++) {
-			if (Status.equals("Not Available")) {
-				Status.set(4, "Available");
+		int index = Status.indexOf("Not Available");
+		if (ID.size() != 0) {
+			for (int i = 0; i < ID.size(); i++) {
+				Status.set(index, "Available");
 			}
+
+			System.out.println("All cars has restocked!  ");
+			System.out.println("Press enter to continue");
+			sc.nextLine();
 		}
 	}
 
 	public void sell() {
+		int index = Status.indexOf("Available");
 		int chs3 = 0;
 		int str = Brand.size();
 		if (Brand.size() == 0) {
@@ -184,7 +190,7 @@ public class Car {
 		} while (chs3 < 1 || chs3 > str);
 
 		for (int i = 0; i < ID.size(); i++) {
-			int total = (int) (Price.get(chs3) + (Price.get(chs3) * 0.1));
+			int total = (int) ((int) Price.get(chs3 - 1) * 1.1);
 
 			ID.get(chs3 - 1);
 			Brand.get(chs3 - 1);
@@ -195,7 +201,7 @@ public class Car {
 
 			System.out.println("Price After Tax (10%): " + total);
 			System.out.println("Enjoy Your Car!");
-			Status.set(4, "Not Available");
+			Status.set(index, "Not Available");
 			sc.nextLine();
 		}
 	}
